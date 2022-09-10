@@ -9,7 +9,7 @@ export async function POST(e: RequestEvent){
     const postBody = {
         fields: { Prompt: data.prompt, Email: data.email }
     } 
-    console.log(process.env['AIRTABLE_API_KEY'])
+    console.log(import.meta.env.AIRTABLE_API_KEY)
     const req = await fetch('https://api.airtable.com/v0/appg9wvRrWyIpiRQN/Prompts', {
         method: 'POST',
         headers: {
