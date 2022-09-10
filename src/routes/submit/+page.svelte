@@ -10,8 +10,12 @@
             },
             body: JSON.stringify({prompt: fd.get("prompt"), email: fd.get("email")})
         })
-        if (rq.ok) alert("your prompt has been submitted!")
-        else alert("something went wrong while submitting your prompt, please try again later")
+        if (rq.status != 500) {
+            alert("your prompt has been submitted!")
+        } else {
+            alert("something went wrong while submitting your prompt, please try again later")    
+        } 
+        
    }
 </script>
 
