@@ -37,7 +37,7 @@
 {#if show}
 <ul>
     {#each data.records as r}
-        <li>{r.fields.Prompt} ({r.fields.Votes} ⬆️) | <button on:click={() => vote(r.id)}>vote for this one</button></li> 
+        <li id={`submission-${r.id}`}>{r.fields.Prompt} ({r.fields.Votes} ⬆️) | <button on:click={() => vote(r.id)}>vote for this one</button></li> 
     {/each}
 </ul>
 {:else}
