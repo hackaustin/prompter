@@ -1,7 +1,6 @@
 <script lang="ts">
    const formSubmit = async (evt: SubmitEvent) => {
         const fd = new FormData(evt.target as HTMLFormElement)
-        evt.preventDefault()
         const val = (document.getElementById("name") as HTMLInputElement)?.value;
       
         const validEmailReq = await fetch(`https://verify.hackaustin.net?email=${fd.get("email")}`)
@@ -28,7 +27,7 @@
 
 <h1>submit</h1>
 
-<form on:submit={formSubmit}>
+<form on:submit|preventDefault={formSubmit}>
     <input type="text" name="prompt" required id="prompt" placeholder="prompt"/>
     <input type="email" name="email" required id="other" placeholder="email"/>
     <button type="submit">submit</button>
