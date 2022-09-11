@@ -1,10 +1,9 @@
-import {error } from '@sveltejs/kit'
+import { error } from '@sveltejs/kit'
 import type { RequestEvent } from '@sveltejs/kit'
-import * as dotenv from 'dotenv'
+import { env } from '$env/dynamic/private'
 
 /** @type {import('../../../../.svelte-kit/types/src/routes/api/submit/$types').RequestHandler} */
 export async function POST(e: RequestEvent){
-    dotenv.config()
     const data = await e.request.json()
     const postBody = {
         fields: { Prompt: data.prompt, Email: data.email }
@@ -13,7 +12,7 @@ export async function POST(e: RequestEvent){
     const req = await fetch('https://api.airtable.com/v0/appg9wvRrWyIpiRQN/Prompts', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${process.env['AIRTABLE_API_KEY']}`,
+            'Authorization': `Bearer ${env['AIRTABLE_API_KEY']}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(postBody)
