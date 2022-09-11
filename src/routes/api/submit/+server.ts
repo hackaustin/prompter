@@ -6,7 +6,7 @@ import { env } from '$env/dynamic/private'
 export async function POST(e: RequestEvent){
     const data = await e.request.json()
     const postBody = {
-        fields: { Prompt: data.prompt, Email: data.email }
+        fields: { Prompt: data.prompt, Email: data.email, Votes: 0 }
     } 
     console.log(process.env["AIRTABLE_API_KEY"])
     const req = await fetch('https://api.airtable.com/v0/appg9wvRrWyIpiRQN/Prompts', {
