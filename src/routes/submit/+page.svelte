@@ -3,6 +3,13 @@
         const fd = new FormData(evt.target as HTMLFormElement)
         evt.preventDefault()
         const val = (document.getElementById("name") as HTMLInputElement)?.value;
+      
+        const validEmailReq = await fetch(`https://verify.hackaustin.net?email=${fd.get("email")}`)
+        const validEmail = await validEmailReq.json()
+        if(validEmail != true {
+         alert("It appears you haven't signed up yet for Hack Austin! (invalid email)")
+         return;
+        }
         const rq = await fetch('/api/submit', {
             method: 'POST',
             headers: {
