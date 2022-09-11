@@ -6,7 +6,7 @@
       
         const validEmailReq = await fetch(`https://verify.hackaustin.net?email=${fd.get("email")}`)
         const validEmail = await validEmailReq.json()
-        if(validEmail != true {
+        if(validEmail != true) {
          alert("It appears you haven't signed up yet for Hack Austin! (invalid email)")
          return;
         }
