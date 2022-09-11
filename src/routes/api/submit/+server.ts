@@ -23,5 +23,4 @@ export async function POST(e: RequestEvent){
         console.log(t)
         return new Response(error(500, `something went wrong ${t}`))
     }
-    return new Response("most likely ok")
 }
