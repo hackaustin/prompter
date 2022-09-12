@@ -9,3 +9,8 @@ node_modules
 
 # Local Netlify folder
 .netlify
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
