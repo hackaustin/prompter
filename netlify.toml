@@ -8,6 +8,9 @@
     publish = "build"
     targetPort = 9999
 
+[context.production]
+    command = "npm_config_yes=true npx dotenv-vault@latest pull --dotenvMe $PRODUCTION_DOTENV_IT && npm run build"
+
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
   #[[redirects]]
