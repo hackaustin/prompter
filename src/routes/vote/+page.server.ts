@@ -12,7 +12,7 @@ export async function load(e: ServerLoadEvent) {
 	});
 	let current = await rq.json();
 	let ret = [];
-	for (let rec of current.records) {
+	for (let rec of (current.records ?? [])) {
 		ret.push(rec);
 	}
 	while (current.offset != undefined) {
