@@ -11,7 +11,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({id: id})
+            body: JSON.stringify({id: id.toString()})
         })
         if (rq.status != 500) {
             alert("your vote has been submitted!")

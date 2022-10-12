@@ -5,12 +5,10 @@ const prisma = new PrismaClient()
 
 export async function GET(e: RequestEvent) {
     const email = e.url.searchParams.get("email") ?? "no email"
-    try {
-        const person = prisma.participant.findFirstOrThrow({where: {email: {equals: email}}})
+    const person = await prisma.participant.findFirst({where: {email: {equals: email}}})
+    if (person) {
         return new Response("true")
-    } catch (e) {
-        if (e instanceof NotFoundError) {
-            return new Response("false")
-        }
+    } else {
+        return new Response("false")
     }
 }

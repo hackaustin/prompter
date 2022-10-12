@@ -9,18 +9,14 @@ const prisma = new PrismaClient()
 /** @type {import('../../../../.svelte-kit/types/src/routes/api/submit/$types').RequestHandler} */
 export async function POST(e: RequestEvent){
     const j_data = await e.request.json()
+
     try {
-        const author = prisma.participant.findFirstOrThrow({where: {email: {equals: j_data.email}}})
+        prisma.prompt.create({data: {
+            authorEmail: j_data.email,
+            prompt: j_data.prompt 
+        }})
     } catch (e) {
-        if (e instanceof NotFoundError) {
-            invalid(400, {error: "user not found"})
-        }
+        return error(500, "didnt work lmao")
     }
-    const pm = prisma.prompt.create({
-        data: {
-            prompt: j_data.prompt,
-            authorEmail: j_data.email
-        }
-    })
     return new Response("ok")
 }
