@@ -5,7 +5,7 @@
     export let data: PageData;
     let show = false;
 
-    const vote = async (id: number) => {
+    const vote = async (id: bigint) => {
         const rq = await fetch(`/api/vote?id=${id}`, {
             method: 'POST',
             headers: {
@@ -22,7 +22,7 @@
 
     const login = async (e: SubmitEvent) => {
         const fd = new FormData(e.target as HTMLFormElement)
-        const rq = await fetch(`https://verify.hackaustin.net?email=${fd.get("email")}`)
+        const rq = await fetch(`/api/verify?email=${fd.get("email")}`)
         const validEmail = await rq.json()
         if(validEmail != true) {
             alert("It appears you haven't signed up yet for Hack Austin! (invalid email)")
