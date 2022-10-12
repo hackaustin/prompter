@@ -12,15 +12,19 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-			},
+		"prisma": "^4.4.0"
+	},
 	"type": "module",
 	"dependencies": {
-		"esbuild": "0.14.5",
+		"@prisma/client": "^4.4.0",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-netlify": "^1.0.0-next.76",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
+		"axios": "^0.27.2",
+		"dotenv": "^16.0.2",
+		"esbuild": "0.14.5",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
@@ -31,8 +35,6 @@
 		"svelte-preprocess": "^4.10.6",
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",
-		"vite": "^3.1.0",
-		"axios": "^0.27.2",
-		"dotenv": "^16.0.2"
+		"vite": "^3.1.0"
 	}
 }
