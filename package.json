@@ -11,9 +11,6 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
-	"devDependencies": {
-		"prisma": "^4.4.0"
-	},
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^4.4.0",
@@ -36,5 +33,8 @@
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",
 		"vite": "^3.1.0"
+	},
+	"devDependencies": {
+		"prisma": "^4.4.0"
 	}
 }

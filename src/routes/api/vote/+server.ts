@@ -1,33 +1,33 @@
-import { error } from '@sveltejs/kit'
-import type { RequestEvent } from '@sveltejs/kit'
-import { env } from '$env/dynamic/private'
+import { error, invalid } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
+import { PrismaClient, type Prompt, Prisma } from '@prisma/client';
+import { NotFoundError } from '@prisma/client/runtime';
+const prisma = new PrismaClient();
 
 /** @type {import('../../../../.svelte-kit/types/src/routes/api/submit/$types').RequestHandler} */
-export async function POST(e: RequestEvent){
-    const apiURL = `https://api.airtable.com/v0/appg9wvRrWyIpiRQN/Prompts/${e.url.searchParams.get("id")}` 
-    const recordReq = await fetch(apiURL, {
-        headers: {
-            'Authorization': `Bearer ${env['AIRTABLE_API_KEY']}`,
-            'Content-Type': 'application/json'
+export async function POST(e: RequestEvent) {
+	const j_data = await e.request.json();
+	let pr;
+	try {
+		pr = await prisma.prompt.findFirstOrThrow({ where: { id: { equals: j_data.id } } });
+	} catch (e) {
+		if (e instanceof NotFoundError) {
+			invalid(400, { error: 'prompt not found' });
+		}
+	}
+    
+    const currVotes = pr?.votes ?? invalid(500, {error: "idk something happened"})
+
+    prisma.prompt.update({
+        where: {
+            id: j_data.id as number
         },
+        data: {
+            votes: currVotes + 1
+        }
     })
-    const rec = await recordReq.json();
-    let votes = rec.fields.Votes + 1;
-    const updateReq = await fetch(apiURL, {
-        method: 'PATCH',
-        headers: {
-            'Authorization': `Bearer ${env['AIRTABLE_API_KEY']}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            fields: {
-                Votes: votes
-            }
-        })
-    })
-    if (updateReq.ok) {
-        return new Response("ok")
-    } else {
-        return new Response(error(500, "something went wrong"))
-    }
+
+    return new Response("ok")
+
 }

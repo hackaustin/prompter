@@ -1,26 +1,26 @@
-import { error } from '@sveltejs/kit'
+import { error, invalid } from '@sveltejs/kit'
 import type { RequestEvent } from '@sveltejs/kit'
 import { env } from '$env/dynamic/private'
+import { PrismaClient, type Prompt, Prisma } from '@prisma/client'
+import { NotFoundError } from '@prisma/client/runtime'
+const prisma = new PrismaClient()
+
 
 /** @type {import('../../../../.svelte-kit/types/src/routes/api/submit/$types').RequestHandler} */
 export async function POST(e: RequestEvent){
-    const data = await e.request.json()
-    const postBody = {
-        fields: { Prompt: data.prompt, Email: data.email, Votes: 0 }
-    } 
-    const req = await fetch('https://api.airtable.com/v0/appg9wvRrWyIpiRQN/Prompts', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${env['AIRTABLE_API_KEY']}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postBody)
-    })
-    if (req.ok) {
-        return new Response("ok")
-    } else {
-        const t = await req.text()
-        console.log(t)
-        return new Response(error(500, `something went wrong ${t}`))
+    const j_data = await e.request.json()
+    try {
+        const author = prisma.participant.findFirstOrThrow({where: {email: {equals: j_data.email}}})
+    } catch (e) {
+        if (e instanceof NotFoundError) {
+            invalid(400, {error: "user not found"})
+        }
     }
+    const pm = prisma.prompt.create({
+        data: {
+            prompt: j_data.prompt,
+            authorEmail: j_data.email
+        }
+    })
+    return new Response("ok")
 }
