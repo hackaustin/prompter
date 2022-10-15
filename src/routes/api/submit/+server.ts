@@ -11,12 +11,13 @@ export async function POST(e: RequestEvent){
     const j_data = await e.request.json()
 
     try {
-        prisma.prompt.create({data: {
+        await prisma.prompt.create({data: {
             authorEmail: j_data.email,
             prompt: j_data.prompt 
         }})
     } catch (e) {
         return error(500, "didnt work lmao")
+        console.log(e)
     }
     return new Response("ok")
 }

@@ -22,7 +22,7 @@ export async function POST(e: RequestEvent) {
 
     cv += 1
 
-	prisma.prompt.update({
+	await prisma.prompt.update({
 		where: {
 			id: id
 		},
